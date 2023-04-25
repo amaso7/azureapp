@@ -1,3 +1,8 @@
+-need to hash passwords bcrypt 
+-need to create Dr login 
+-patient home pg
+-pt 2 dr messaging
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
