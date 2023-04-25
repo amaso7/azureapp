@@ -5,6 +5,7 @@ import React from 'react';
 import LoginPage from './login';
 import DrLoginPage from './drlogin'
 import PatientSignup from './PatientSignup';
+import PtHome from './pthome';
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
         <Route path="/drlogin.js" element={<DrLoginPage/>} />
         <Route path="/login.js" element={<LoginPage/>} />
         <Route path="/PatientSignup.js" element={<PatientSignup/>} />
+        <Route path="/pthome.js" element={<PtHome/>} />
         </Routes>
         </Router>
         

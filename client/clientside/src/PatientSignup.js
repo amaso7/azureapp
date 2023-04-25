@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { useState } from 'react';
 import zxcvbn from 'zxcvbn';
@@ -75,9 +76,9 @@ const PatientSignUp = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     if (validateForm(values)) {
-      axios.post('http://localhost:8000/PatientSignup', values)
+      axios.post('http://localhost:8081/ptsignup', values)
         .then(res => {
-          navigate('/login');
+          navigate('/login.js');
         })
         .catch(err => console.log(err));
     }

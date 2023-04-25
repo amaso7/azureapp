@@ -1,3 +1,4 @@
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -9,17 +10,17 @@ app.use(express.json())
 // Use middlewares
 app.use(cors());
 app.use(bodyParser.json());
+const { check, validationResult } = require('express-validator');
 
 const db = mysql.createConnection({
     host: "localhost",
-    user: "saadh",
-    password: "A11db2231*$",
-    database: "mydb",
-    port: 3306
+    user: "root",
+    password: "",
+    database: "ptsignup",
 })
 
-app.post('/patientSignup', (req, res) => {
-  const sql = "INSERT INTO mydb.patientdata (`firstname`,`lastname`,`email`,`password`,`dateofbirth`,`currentdoctor`) VALUES (?)";
+app.post('/ptsignup', (req, res) => {
+  const sql = "INSERT INTO patientsignup (`firstname`,`lastname`,`email`,`password`,`dateofbirth`,`currentdoctor`) VALUES (?)";
   const values = [
     req.body.firstname,
     req.body.lastname,
@@ -37,7 +38,32 @@ app.post('/patientSignup', (req, res) => {
   })
   
 })
+app.post('/login',
+  [
+    check("email", "Emaill length error")
+      .isEmail()
+      .isLength({ min: 10, max: 30 }),
+    check("password", "password length 8-10").isLength({ min: 8, max: 10 }),
+  ],
+  (req, res) => {
+    const sql = "SELECT * FROM patientsignup WHERE email = ? AND password = ?";
+    db.query(sql, [req.body.email, req.body.password], (err, data) => {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.json(errors);
+      } else {
+        if (err) {
+          return res.json("Error");
+        }
+        if (data.length > 0) {
+          return res.json("Success");
+        } else {
+          return res.json("Failed");
+        }
+      }
+    });
+  });
 
-app.listen(8000, ()=> {
-  console.log("...Server is running on port 8000")
+app.listen(8081, ()=> {
+  console.log("...Server is running on port 8081")
 })
